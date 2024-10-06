@@ -10,8 +10,6 @@ int main(void)
 
     while(1)
         {
-        // just for test push to git
-		//another test
         //заполнение матрицы(первый цикл - по строкам, второй(вложенный) - по элементам строки)
         for (int i = 0; i < 6; i++)
             {
