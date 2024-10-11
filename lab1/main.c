@@ -19,7 +19,7 @@ int main(void)
                 //проверка на правильный ввод
                 while(inputInfo != 1)
                     {
-                    printf("Enter element with indexes %dx%d:",i + 1, j + 1);
+                    printf("Enter element with indexes %dx%d: \t",i + 1, j + 1);
                     inputInfo = scanf("%d", &arr[i][j]);
                     if(inputInfo != 1)
                         {

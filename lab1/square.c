@@ -60,6 +60,7 @@ int main(void) {
         //обнуление переменной ответа
         response = 0;
         printf("\n\nDo you want to solve equation again?(1 - yes/0 - no): ");
+		fflush(stdin);
         scanf("%d", &response);
 
         if(response == 1) {
