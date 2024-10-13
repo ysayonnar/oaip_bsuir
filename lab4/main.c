@@ -27,6 +27,7 @@ int main(void){
 		}
 		clearBuffer();//очистка потока ввода
 	}
+	
 
 	//Заполнение массива
 	for (int i = 0; i < MAX; i++){
@@ -52,7 +53,7 @@ int main(void){
 			}
 		}
 	}
-	
+
 	//выводим только простые числа и пропускаем нули
 	printf("Prime number from 2 to %d:\t", n);
 	for (int i = 0; i < n; i++){
