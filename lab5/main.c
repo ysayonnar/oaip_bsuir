@@ -12,6 +12,7 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
+
 int main(void){
 	//ининциализация переменных
 	int matrix[ROWS][COLUMNS];
@@ -32,6 +33,8 @@ int main(void){
 	//пользователь выбрал заполнение случайными числами
 	if (response == 1){
 		int minimal, maximum, inputResult;
+
+		
 		
 		//вводим нижнюю и верхнюю границу для случайных чисел
 		while(inputResult == 0){
@@ -97,6 +100,7 @@ int main(void){
 		}
 		printf("|\n");
 	}
+	
 	//выводим сумму
 	printf("The sum of the elements having odd values and standing in even places is %d", sum);
 
