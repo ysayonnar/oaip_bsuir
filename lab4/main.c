@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 //максимальное значение 978, я проверял
-#define MAX 978
+#define MAX 990
 
 //функция очистики потока ввода
 void clearBuffer(){
@@ -9,9 +9,14 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
-int main(void){
+int main(int argc, char *argv[]){
+	// printf("Parametrs: ");
+	// for (int i = 0; i < argc; i++) {
+	// 	printf("\n%s", argv[i]);
+	// }
 	//инициализация переменных
-	int n, inputResult;
+	int n;
+	int inputResult = 0;
 	int numbers[MAX];
 
 	//Ввод числа n
