@@ -11,6 +11,7 @@ void clearBuffer(){
 }
 
 int main(){
+	//test
 	//инициализация переменных
 	int n = 0;
 	int inputResult = 0;
