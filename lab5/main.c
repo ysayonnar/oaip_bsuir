@@ -12,14 +12,13 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
-
 int main(void){
 	//ининциализация переменных
 	int matrix[ROWS][COLUMNS];
 	int response = 0;
 	int sum = 0;
 	int repeatResult = 0;
-
+	
 	//цикл while для зацикливания программы
 	while(1){
 		//даем пользователю выбор: вводить массив вручную, либо заполнить случайными числами
