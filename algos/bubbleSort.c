@@ -1,10 +1,22 @@
+#include <stdlib.h>
+#include <time.h>
 #include <stdio.h>
-#define LENGTH 9
+#define LENGTH 30
 
 
 int main(void){
-    int arr[LENGTH] = {12,3,1,1,5,1,-123,123,10};
+    int arr[LENGTH];
     int temp;
+
+    srand(time(0));
+    for (int i = 0; i < LENGTH; i++) {
+        arr[i] = rand() % 100;
+    }
+
+    printf("Unsorted array: ");
+    for (int i = 0; i < LENGTH; i++) {
+        printf("%d ", arr[i]);
+    }
 
     for (int i = 0; i < LENGTH; i++) {
         for (int j = 0; j < LENGTH - i - 1; j++) {
@@ -15,9 +27,9 @@ int main(void){
             }
         }
     }
-    printf("\n");
+    printf("\n\nSorted array: ");
     for (int i = 0; i < LENGTH; i++) {
         printf("%d ", arr[i]);
     }
-    
+    printf("\n");    
 }
