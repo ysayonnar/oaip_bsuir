@@ -19,7 +19,6 @@ int main(void){
 	int response = 0;
 	int sum = 0;
 	int repeatResult = 0;
-
 	//цикл while для зацикливания программы
 	while(1){
 		//даем пользователю выбор: вводить массив вручную, либо заполнить случайными числами
@@ -79,8 +78,8 @@ int main(void){
 						inputInfo = scanf("%d", &matrix[i][j]);
 						if(inputInfo != 1){
 							printf("Invalid input!\n");
-							clearBuffer();//очищаем поток ввода
 						}
+						clearBuffer();//очищаем поток ввода
 					}
 				}
 			}
