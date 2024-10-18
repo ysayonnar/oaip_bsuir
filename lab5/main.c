@@ -12,13 +12,13 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
-
 int main(void){
 	//ининциализация переменных
 	int matrix[ROWS][COLUMNS];
 	int response = 0;
 	int sum = 0;
 	int repeatResult = 0;
+
 	//цикл while для зацикливания программы
 	while(1){
 		//даем пользователю выбор: вводить массив вручную, либо заполнить случайными числами
@@ -102,8 +102,7 @@ int main(void){
 		
 		//выводим сумму
 		printf("The sum of the elements having odd values and standing in even places is %d", sum);
-
-
+		printf("test")
 		//спрашиваем у пользователя желает ли он продолжить выполнение
 		printf("\nDo you want to continue?(1-yes): ");
 		scanf("%d", &repeatResult);
