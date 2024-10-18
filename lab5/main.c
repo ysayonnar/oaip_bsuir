@@ -102,7 +102,7 @@ int main(void){
 		
 		//выводим сумму
 		printf("The sum of the elements having odd values and standing in even places is %d", sum);
-		printf("test")
+		
 		//спрашиваем у пользователя желает ли он продолжить выполнение
 		printf("\nDo you want to continue?(1-yes): ");
 		scanf("%d", &repeatResult);
