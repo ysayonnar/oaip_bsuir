@@ -11,7 +11,6 @@ void clearBuffer(){
 }
 
 int main(){
-	//test
 	//инициализация переменных
 	int n = 0;
 	int inputResult = 0;
@@ -59,13 +58,13 @@ int main(){
 			}
 		}
 		//выводим только простые числа и пропускаем нули
-		printf("Prime number from 2 to %d:\t", n);
+		printf("Prime number from 2 to %d: ", n);
 		for (int i = 0; i < n; i++){
 			if(numbers[i] != 0){
 				printf("%d ", numbers[i]);
 			}
 		}
-		
+		//спрашиваем желает ли пользователь продолжить
 		printf("\nDo you want to continue?(1-yes): ");
 		scanf("%d", &repeatResult);
 		if (repeatResult != 1){
