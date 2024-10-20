@@ -1,5 +1,5 @@
-./.vscode
-./pg
+vscode/
+pg/
 *.exe
 ./temp
 ./.idea
