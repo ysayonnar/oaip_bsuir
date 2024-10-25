@@ -26,6 +26,7 @@ int main(void){
 			printf("Do you want the array to be filled with random values or to fill it manually?(1 - random/2 - manualy):");
 			scanf("%d", &response);
 			if (response != 1 && response != 2){
+				//вывод сообщения о неправильном вводе
 				printf("Incorrect input!\n");
 				response = 0;
 			}	
@@ -52,6 +53,7 @@ int main(void){
 						inputResult = 0;
 					}
 				}else{
+					//вывод сообщения о неправильном вводе
 					printf("Incorrect input!\n");
 					inputResult = 0;
 				}
@@ -74,9 +76,11 @@ int main(void){
 				for (int j = 0; j < COLUMNS; j++){
 					inputInfo = 0;
 					while(inputInfo != 1){
+						//ввод элемента массива i-той строки и j-того столбца
 						printf("Enter element with indexes %dx%d: ",i + 1, j + 1);
 						inputInfo = scanf("%d", &matrix[i][j]);
 						if(inputInfo != 1){
+							//вывод сообщения о неправильном вводе
 							printf("Invalid input!\n");
 						}
 						clearBuffer();//очищаем поток ввода
