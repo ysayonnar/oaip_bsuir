@@ -13,6 +13,7 @@ int main(void){
 	//цикл для многоразового использования
 	while(userResponse == 1){
 		int *matrix;
+		int *croppedMatrix;
 		int matrixOrder = 0;
 		int maximumElement = 0;
 		int maximumIndexByRow = 0;
@@ -96,43 +97,69 @@ int main(void){
 				//выделяю элементы
 				if (i == maximumIndexByRow && j == maximumIndexByColumn) {
 					printf("\033[1;32m"); 
-					printf("%6d ", *(matrix + (i*matrixOrder) + j));
+					printf("%7d", *(matrix + (i*matrixOrder) + j));
 					printf("\033[0m"); 
 				}else if(i == maximumIndexByRow || j == maximumIndexByColumn){
 					printf("\033[1;34m"); 
-					printf("%6d ", *(matrix + (i*matrixOrder) + j));
+					printf("%7d", *(matrix + (i*matrixOrder) + j));
 					printf("\033[0m");
 				}
 				else{
-					printf("%6d ", *(matrix + (i*matrixOrder) + j));
+					printf("%7d", *(matrix + (i*matrixOrder) + j));
 				}
+			}
+			printf("|\n");
+		}
+
+		int newSize = (matrixOrder - 1) * (matrixOrder - 1);
+		int *newMatrix = (int *)malloc(sizeof(int) * newSize);
+
+		int newRow = 0, newCol;
+		for (int i = 0; i < matrixOrder; i++) {
+			if(i == maximumIndexByRow) continue;
+			newCol = 0;
+			for (int j = 0; j < matrixOrder; j++) {
+				if(j == maximumIndexByColumn) continue;
+				*(newMatrix + newRow * (matrixOrder - 1) + newCol) = *(matrix + i * matrixOrder + j);
+				newCol++;
+			}
+			newRow++;
+		}
+
+		free(matrix); // освобождаем память
+		matrix = (int *)realloc(newMatrix, sizeof(int) * newSize);
+		matrixOrder--;
+
+		printf("Matrix without the row and column of the maximum element:\n");
+		for (int i = 0; i < matrixOrder; i++) {
+			printf("|");
+			for (int j = 0; j < matrixOrder; j++) {
+				printf("%7d", *(matrix + i * matrixOrder + j));
 			}
 			printf("|\n");
 		}
 
 		//вывод матрицы без строки и столбца максимального элемента
-		printf("Matrix without rows and columns of the maximum element:\n");
-		for (int i = 0; i < matrixOrder; i++) {
-			if(i == maximumIndexByRow ){
-				continue;
-			}
-			printf("|");
-			for (int j = 0; j < matrixOrder; j++) {
-				if(j == maximumIndexByColumn){
-					continue;
-				}
-				printf("%6d ", *(matrix + (i*matrixOrder) + j));
-			}
-			printf("|\n");
-		}
+		// printf("Matrix without rows and columns of the maximum element:\n");
+		// for (int i = 0; i < matrixOrder; i++) {
+		// 	if(i == maximumIndexByRow ){
+		// 		continue;
+		// 	}
+		// 	printf("|");
+		// 	for (int j = 0; j < matrixOrder; j++) {
+		// 		if(j != maximumIndexByColumn){
+		// 			printf("%7d", *(matrix + (i*matrixOrder) + j));
+		// 		}
+		// 	}
+		// 	printf("|\n");
+		// }
 
-		// int scanfResult;
 		printf("Do you want to continue?(1-Yes):");
-		// scanfResult = scanf("%d", &userResponse);
 		if(scanf("%d", &userResponse) == 0){
 			userResponse = 0;
 		}
 		clearBuffer();
+		free(newMatrix);
 		free(matrix); //освобождаем память
 	}
 }
