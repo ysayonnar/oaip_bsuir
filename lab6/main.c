@@ -122,7 +122,7 @@ int main(void){
 				if(j == maximumIndexByColumn) continue;
 				*(newMatrix + newRow * (matrixOrder - 1) + newCol) = *(matrix + i * matrixOrder + j);
 				newCol++;
-			}
+			}	
 			newRow++;
 		}
 
@@ -159,7 +159,7 @@ int main(void){
 			userResponse = 0;
 		}
 		clearBuffer();
-		free(newMatrix);
+		// free(newMatrix);
 		free(matrix); //освобождаем память
 	}
 }
