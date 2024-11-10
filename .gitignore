@@ -3,5 +3,6 @@ vscode/
 *.exe
 ./temp
 ./.idea
+./cmake-build-debug
 
 

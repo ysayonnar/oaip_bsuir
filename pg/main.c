@@ -1,17 +1,18 @@
 #include <stdio.h>
 
-int main() {
-    int rows = 20;
-    int cols = 10; 
+int add(int, int);
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (i % 2 == 0) {
-                printf("%3d ", i + j);
-            } else {
-                printf("%3d ", 100 - i - j);
-            }
-        }
-        printf("\n");
-    }
+int add(int a, int b){
+	return a + b;
+}
+
+//разделить лабу на три файла - 
+//1.prototypes.h - прототипы функций
+//2.funcitons.h - реализации функции
+//3.lab7.c - дергать ф-ции
+
+//лаба 7 - 8 варик 
+
+int main(void){
+	printf("%d", add(1, 2));	
 }
