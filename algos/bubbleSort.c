@@ -31,5 +31,6 @@ int main(void){
     for (int i = 0; i < LENGTH; i++) {
         printf("%d ", arr[i]);
     }
-    printf("\n");    
+    printf("\n");   
+	 
 }

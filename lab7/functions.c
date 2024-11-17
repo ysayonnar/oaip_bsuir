@@ -25,7 +25,6 @@ int inputMatrixOrder(){
 }
 
 double** create2DArray(int* rows, int* cols){
-	
 	double **arr;
 	arr = (double**)calloc(*rows, sizeof(double*));
 	for (int i = 0; i < *rows; i++) {

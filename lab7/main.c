@@ -4,6 +4,7 @@
 
 int main(){
 	int userResponse = 1;
+
 	while(userResponse == 1){
 		int scanfResult = 0;
 		int typeOfFilling = 0;
@@ -23,13 +24,13 @@ int main(){
 			}
 			clearBuffer();
 		}
-		
 		//заполнение массива
 		if (typeOfFilling == 1) {
 			input2DArrayRandomly(arr, &matrixOrder, &matrixOrder);
 		}else if(typeOfFilling == 2){
 			input2DArrayManually(arr, &matrixOrder, &matrixOrder);
 		}
+
 		//вывод матрицы
 		printf("Your matrix looks like:\n");
 		print2DArray(arr, &matrixOrder, &matrixOrder, -1);

@@ -1,25 +1,25 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-void clearBuffer();
+extern void clearBuffer();
 
-int inputMatrixOrder();
+extern int inputMatrixOrder();
 
-double** create2DArray(int* rows, int* cols);
+extern double** create2DArray(int* rows, int* cols);
 
-void input2DArrayManually(double** arr, int* cols, int* rows);
+extern void input2DArrayManually(double** arr, int* rows, int* cols);
 
-void input2DArrayRandomly(double** arr, int* cols, int* rows);
+extern void input2DArrayRandomly(double** arr, int* cols, int* rows);
 
-void print2DArray(double** arr, int* rows, int* cols, int columnIndexToHighlight);
+extern void print2DArray(double** arr, int* rows, int* cols, int columnIndexToHighlight);
 
-void freeMemory2DArray(double** arr, int* rows);
+extern void freeMemory2DArray(double** arr, int* rows);
 
-double* createArray(int* length);
+extern double* createArray(int* length);
 
-void inputArray(double* arr, int* length);
+extern void inputArray(double* arr, int* length);
 
-double** insertColumn(double** arr, double* numbers, int* rows, int* cols, int* columnIndex);
+extern double** insertColumn(double** arr, double* numbers, int* rows, int* cols, int* columnIndex);
 
 
 #endif
