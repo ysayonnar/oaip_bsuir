@@ -24,7 +24,7 @@ int main(void){
 		//ввод порядка матрицы
 		while(matrixOrder < 2){
 			printf("Enter matrix order: ");
-			inputResult = scanf_s("%d", &matrixOrder);
+			inputResult = scanf("%d", &matrixOrder);
 			if(inputResult != 1){
 				printf("\033[1;31m"); //окрашивание в красный цвет ошибок
 				printf("\tIncorrect input!\n");
