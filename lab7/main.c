@@ -1,29 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "functions.h"
-
+//5
 int main(){
 	int userResponse = 1;
 
 	while(userResponse == 1){
 		int scanfResult = 0;
-		int typeOfFilling = 0;
 		int matrixOrder = inputMatrixOrder();
 		double **arr = create2DArray(matrixOrder, matrixOrder); // создание матрицы
 		double *numbers = createArray(matrixOrder);// создание массива чисел для вставки
+		int typeOfFilling = inputInteger(1, 2);//ввод типа заполнения
 
-		//выбор варианта заполнения массива
-		while(scanfResult == 0){	
-			printf("Do you want to fill array randomly or manually(1-random/2-manualy): ");
-			scanfResult = scanf("%d", &typeOfFilling);
-			if(scanfResult == 0){
-				printf("\033[1;31m\tIncorrect input!\n\033[0m");
-			}else if(typeOfFilling != 1 && typeOfFilling != 2){
-				printf("\033[1;31m\tMust be 1 or 2!\n\033[0m");
-				scanfResult = 0;
-			}
-			clearBuffer();
-		}
 		//заполнение массива
 		if (typeOfFilling == 1) {
 			input2DArrayRandomly(arr, matrixOrder, matrixOrder);
@@ -40,18 +28,7 @@ int main(){
 		inputArray(numbers, matrixOrder);
 		//ввод элемента после которого будут вставлены числа
 		int columnIndex = -1;
-		scanfResult = 0;
-		while(scanfResult == 0){
-			printf("Enter the column after which the numbers will be inserted: ");
-			scanfResult = scanf("%d", &columnIndex);
-			if(scanfResult == 0){
-				printf("\033[1;31m\tIncorrect input!\n\033[0m");
-			}else if(columnIndex < 0 || columnIndex > matrixOrder){
-				printf("\033[1;31m\tOut of range!\n\033[0m");
-				scanfResult = 0;
-			}
-			clearBuffer();
-		}
+		columnIndex = inputInteger(0, matrixOrder);
 
 		//преобразование массива
 		double **transformedArray = insertColumn(arr, numbers, matrixOrder, matrixOrder, columnIndex);

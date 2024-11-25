@@ -8,6 +8,23 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
+int inputInteger(int min, int max){
+	int number = 0;
+	int scanfResult = 0;
+	while(scanfResult == 0){	
+		printf("Enter number: ");
+		scanfResult = scanf("%d", &number);
+		if(scanfResult == 0){
+			printf("\033[1;31m\tIncorrect input!\n\033[0m");
+		}else if(number > max || number < min){
+			printf("\033[1;31m\tMust be from %d to %d!\n\033[0m", min, max);
+			scanfResult = 0;
+		}
+		clearBuffer();
+	}
+	return number;
+}
+
 int inputMatrixOrder(){
 	int matrixOrder = 0;
 	int scanfResult = 0;
@@ -28,7 +45,7 @@ double** create2DArray(int rows, int cols){
 	double **arr;
 	arr = (double**)calloc(rows, sizeof(double*));
 	for (int i = 0; i < rows; i++) {
-		arr[i] = (double*)calloc(cols, sizeof(double));
+		*(arr + i) = (double*)calloc(cols, sizeof(double));
 	}
 	return arr;
 }
@@ -39,7 +56,7 @@ void input2DArrayManually(double** arr, int rows, int cols){
 			int scanfResult = 0;
 			while(scanfResult == 0){
 				printf("Enter element with index [%dx%d]: ", i, j);
-				scanfResult = scanf("%lf", &arr[i][j]);
+				scanfResult = scanf("%lf", *(arr + i) + j);
 				if(scanfResult == 0){
 					printf("\033[1;31m\tIncorrect input!\n\033[0m");
 				}
@@ -74,7 +91,7 @@ void input2DArrayRandomly(double** arr, int rows, int cols){
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			double scale = rand() / (double) RAND_MAX; 
-			arr[i][j] = lowerBound + scale * (upperBound - lowerBound);
+			*(*(arr + i) + j) = lowerBound + scale * (upperBound - lowerBound);
 		}
 	}
 }
@@ -84,9 +101,9 @@ void print2DArray(double** arr, int rows, int cols, int columnIndexToHighlight){
 		printf("|");
 		for (int j = 0; j < cols; j++) {
 			if(j == columnIndexToHighlight){
-				printf("\033[1;34m%10.2lf\033[0m", arr[i][j]);
+				printf("\033[1;34m%10.2lf\033[0m", *(*(arr + i) + j));
 			}else{
-				printf("%10.2lf", arr[i][j]);
+				printf("%10.2lf", *(*(arr + i) + j));
 			}
 		}
 		printf("|\n");
@@ -95,7 +112,7 @@ void print2DArray(double** arr, int rows, int cols, int columnIndexToHighlight){
 
 void freeMemory2DArray(double** arr, int rows){
 	for(int i = 0; i < rows; i++){
-		free(arr[i]);
+		free(*(arr + i));
 	}
 	free(arr);
 }
@@ -111,7 +128,7 @@ void inputArray(double *arr, int length){
 		int scanfResult = 0;
 		while(scanfResult == 0){
 			printf("Enter element with index [%d]: ", i);
-			scanfResult = scanf("%lf", &arr[i]);
+			scanfResult = scanf("%lf", arr + i);
 			if(scanfResult == 0){
 				printf("\033[1;31m\tIncorrect input!\n\033[0m");
 			}
@@ -127,11 +144,11 @@ double** insertColumn(double **arr, double *numbers, int rows, int cols, int col
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < newColumnsLength; j++) {
 			if(j == columnIndex){
-				transformedArray[i][j] = numbers[i];
+				*(*(transformedArray + i) + j) = *(numbers + i);
 			}else if(j < columnIndex){
-				transformedArray[i][j] = arr[i][j];
+				*(*(transformedArray + i) + j) = *(*(arr + i) + j);
 			}else{
-				transformedArray[i][j] = arr[i][j - 1];
+				*(*(transformedArray + i) + j) = *(*(arr + i) + j - 1);
 			}
 		}
 	}
