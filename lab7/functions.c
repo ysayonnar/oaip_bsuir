@@ -88,6 +88,7 @@ void input2DArrayRandomly(double** arr, int rows, int cols){
 		clearBuffer();
 	}
 	srand(time(0));
+	
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			double scale = rand() / (double) RAND_MAX; 
