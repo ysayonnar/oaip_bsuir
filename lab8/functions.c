@@ -7,6 +7,7 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
+//проверка является ли символ цифрой
 int isNumber(char symbol){
     if (symbol >='0' && symbol <= '9'){
         return 1;
@@ -52,12 +53,12 @@ void printString(char *message, char *str){
 char* transformString(char *str, int *length){
     char *newString = (char*)calloc(*length + 1, sizeof(char));
     int counter = 0;
-    int isDotWas = 0;
-    int elementsToDelete = 0;
+    int isDotWas = 0;//флаг для символа точки
+    int elementsToDelete = 0;//счетчик элементов
 
     for (int i = 0; i < *length; i++) {
         if(str[i] == '.'){
-            newString[i-elementsToDelete] = str[i];
+            newString[i - elementsToDelete] = str[i];
             isDotWas = 1;
             counter = 0;
         } else if(isDotWas == 1 && isNumber(str[i]) == 1){
