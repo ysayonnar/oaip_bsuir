@@ -7,9 +7,9 @@ void clearBuffer(){
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
-int strLength( char *str) {
+int strLength(char *str) {
     int length = 0;
-    while (str[length] != '\0') {
+    while (*(str + length) != '\0') {
         length++;
     }
     return length;
@@ -39,11 +39,11 @@ int inputNumber(char* message, int min, int max){
 char *my_strncpy(char *dest, char *src, int n) {
     int i;
     
-    for (i = 0; i < n && src[i] != '\0'; i++) {
+    for (i = 0; i < n && *(src + i) != '\0'; i++) {
         *(dest + i) = *(src + i);
     }
 
-    // Заполнение оставшейся части dest нулями, если src короче n
+    // заполнение оставшейся части dest нулями, если src короче n
     for (; i < n; i++) {
         *(dest + i) = '\0';
     }
@@ -78,19 +78,19 @@ void printArrayOfMatrix(char ****arr, int matrixNumber, int rows, int cols){
 }
 
 char**** createArrayOfMatrix(int matrixNumber, int rows, int cols){
-	char ****arr = calloc(matrixNumber, sizeof(char***));
+	char ****arr = (char****)calloc(matrixNumber, sizeof(char***));
 	for(int i = 0; i < matrixNumber; i++){
-		printf("\t\033[32mCreating matrix with index [%d]\033[0m\n", matrixNumber);
+		printf("\t\033[32mCreating matrix with index [%d]\033[0m\n", i);
 		*(arr + i) = createMatrixAndFill(rows, cols);
 	}
 	return arr;
 }
 
 char*** createMatrixAndFill(int rows, int cols){
-	char ***matrix = calloc(rows, sizeof(char**));
+	char ***matrix = (char***)calloc(rows, sizeof(char**));
 
 	for(int i = 0; i < rows; i++){
-		*(matrix + i) = calloc(cols, sizeof(char*));
+		*(matrix + i) = (char**)calloc(cols, sizeof(char*));
 	}
 
 	for(int i = 0; i < rows; i++){
@@ -109,9 +109,9 @@ int count_words(char *str) {
 
     while (*str) {
         if (*str == ' ' || *str == '\t' || *str == '\n') {
-            in_word = 0;
+            in_word = 0;  // флаг - находимся не в слове
         } else if (!in_word) {
-            in_word = 1;
+            in_word = 1;//флаг - находимся в слове
             count++;
         }
         str++;
@@ -122,7 +122,7 @@ int count_words(char *str) {
 char **findWords(char *str, int *wordsAmount) {
     int num_words = count_words(str);
 	*wordsAmount = num_words;
-    char **result = malloc((num_words + 1) * sizeof(char *));
+    char **result = (char**)malloc((num_words + 1) * sizeof(char *));
 
     int word_index = 0;
     while (*str) {
@@ -137,11 +137,11 @@ char **findWords(char *str, int *wordsAmount) {
             int word_length = str - start;
 
             // Выделяем память под слово и копируем его
-            result[word_index] = malloc((word_length + 1) * sizeof(char));
+            *(result + word_index) = (char*)malloc((word_length + 1) * sizeof(char));
             for (int i = 0; i < word_length; i++) {
-                result[word_index][i] = start[i];
+                *(*(result + word_index) + i) = *(start + i);
             }
-            result[word_index][word_length] = '\0';
+            *(*(result + word_index) + word_length) = '\0';
             word_index++;
         }
     }
@@ -152,7 +152,7 @@ char **findWords(char *str, int *wordsAmount) {
 int isPalindrome(char *word) {
     int len = strLength(word);
     for (int i = 0; i < len / 2; i++) {
-        if (word[i] != word[len - 1 - i]) {
+        if (*(word + i) != *(word + len - 1 - i)) {
             return 0; 
         }
     }
@@ -177,7 +177,7 @@ int getPalindromesInString(char **palindromes, int palindromesCounter, char* str
 }
 
 void findPalindromes(char ****arr, int matrixNumber, int rows, int cols){
-	char **palindromes = calloc(20, sizeof(char*));
+	char **palindromes = (char**)calloc(20, sizeof(char*));
 	int palindromesCounter = 0;
 
 	for(int i = 0; i < matrixNumber; i++){

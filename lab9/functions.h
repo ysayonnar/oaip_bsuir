@@ -12,7 +12,6 @@ char*** createMatrixAndFill(int rows, int cols);
 void printArrayOfMatrix(char ****arr, int matrixNumber, int rows, int cols);
 void findPalindromes(char ****arr, int matrixNumber, int rows, int cols);
 int getPalindromesInString(char **palindromes, int palindromesCounter, char* string);
-char *my_strncpy(char *dest, char *src, int n);
 char **findWords(char *string, int *wordsAmount);
 int isPalindrome(char *word);
 void freeArrayOfMatrix(char ****arr, int matrixNumber, int rows, int cols);
