@@ -11,5 +11,5 @@ int main(){
 	task[0](arr, matrixNumber, rows, cols);
 	task[1](arr, matrixNumber, rows, cols);
 
-	freeArrayOfMatrix(arr, matrixNumber, rows, cols);
+	freeArrayOfMatrix(arr, matrixNumber, rows, cols);	
 }

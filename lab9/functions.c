@@ -36,19 +36,23 @@ int inputNumber(char* message, int min, int max){
 	return n;
 }
 
-char *my_strncpy(char *dest, char *src, int n) {
-    int i;
-    
-    for (i = 0; i < n && *(src + i) != '\0'; i++) {
-        *(dest + i) = *(src + i);
+//рекурсия здесь
+char *my_strncpy(char *dest, const char *src, int n) {
+    // Базовый случай: если n равно 0, или достигнут конец строки src
+    if (n == 0 || *src == '\0') {
+        // Заполняем оставшуюся часть dest нулями
+        while (n > 0) {
+            *dest++ = '\0';
+            n--;
+        }
+        return dest;
     }
 
-    // заполнение оставшейся части dest нулями, если src короче n
-    for (; i < n; i++) {
-        *(dest + i) = '\0';
-    }
+    // Копируем текущий символ
+    *dest = *src;
 
-    return dest;
+    // Рекурсивный вызов для следующего символа
+    return my_strncpy(dest + 1, src + 1, n - 1);
 }
 
 char* inputString(char* msg, int length){

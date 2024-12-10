@@ -48,7 +48,6 @@ char* inputString(int length){
 void printString(char *message, char *str){
 	printf("%s", message);
 	puts(str);
-	clearBuffer();
 }
 
 char* transformString(char *str, int *length){
