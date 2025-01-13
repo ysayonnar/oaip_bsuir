@@ -74,7 +74,7 @@ void printArrayOfMatrix(char ****arr, int matrixNumber, int rows, int cols){
 		for(int j = 0; j < rows; j++){
 			printf("|");
 			for(int k = 0; k < cols; k++){
-				printf("%15s", *(*(*(arr + i)+ j) + k));
+				printf("%20s", *(*(*(arr + i)+ j) + k));
 			}
 			printf("|\n");
 		}
@@ -163,6 +163,19 @@ int isPalindrome(char *word) {
     return 1; 
 }
 
+int isPalindromeTwoPointers(char *word){
+	int i = 0;
+	int j = strLength(word) - 1;
+	while (i <= j) {
+		if (*(word + i) != *(word + j)){
+			return 0;
+		}
+		i++;
+		j--;
+	}
+	return 1;
+}
+
 int getPalindromesInString(char **palindromes, int palindromesCounter, char* string) {
 	int wordAmount = 0;
     char **words = findWords(string, &wordAmount);
@@ -215,4 +228,4 @@ void freeArrayOfMatrix(char ****arr, int matrixNumber, int rows, int cols){
 	}
 }
 
-// *(*(*(arr + i)+ j) + k) - обращение к элементу...
+// *(*(*(arr + i)+ j) + k) - обращение к элементу
