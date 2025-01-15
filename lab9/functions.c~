@@ -16,7 +16,7 @@ int strLength(char *str) {
 }
 
 int inputNumber(char* message, int min, int max){
-    int n = 0;
+	int n = 0;
     int scanfRes = 0;
 
     while(scanfRes == 0){
