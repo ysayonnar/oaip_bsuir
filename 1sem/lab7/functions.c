@@ -69,6 +69,7 @@ void input2DArrayManually(double** arr, int rows, int cols){
 void input2DArrayRandomly(double** arr, int rows, int cols){
 	int lowerBound = 0, upperBound = 0;
 	int inputResult = 0;
+
 	while(inputResult == 0){
 		printf("Enter the lower and upper bounds (from -10000 to 10000):");
 		inputResult = scanf("%d %d", &lowerBound, &upperBound);
@@ -87,6 +88,7 @@ void input2DArrayRandomly(double** arr, int rows, int cols){
 		}
 		clearBuffer();
 	}
+
 	srand(time(0));
 	
 	for (int i = 0; i < rows; i++) {
@@ -127,6 +129,7 @@ double* createArray(int length){
 void inputArray(double *arr, int length){
 	for (int i = 0; i < length; i++) {
 		int scanfResult = 0;
+		
 		while(scanfResult == 0){
 			printf("Enter element with index [%d]: ", i);
 			scanfResult = scanf("%lf", arr + i);
