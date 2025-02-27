@@ -169,7 +169,7 @@ struct Companies searchCompaniesByTax(struct Companies companies, float tax){
 			newCompanies.companies[counter].deadline = companies.companies[i].deadline; 
 			newCompanies.companies[counter].paymentDate = companies.companies[i].paymentDate; 
 			newCompanies.companies[counter].tax = companies.companies[i].tax; 
-			counter++;			
+			counter++;
 		}
 	}
 	
@@ -181,6 +181,8 @@ struct Companies searchCompaniesByTax(struct Companies companies, float tax){
 	}else{
 		printAll(newCompanies);
 	}
+
+	return newCompanies;
 }
 
 void bubbleSortCompaniesByTax(struct Companies *companies) {
