@@ -42,7 +42,7 @@ float inputFloat(char* message, float min, float max){
             printf("\033[1;31m\tInvalid Input!\033[0m\n");
         }
         else if(n < min || n > max) {
-            printf("\033[1;31m\tNumber must be from %.1f to %.1f!\033[0m\n", min, max);
+            printf("\033[1;31m\tNumber must be from %.1f to %f!\033[0m\n", min, max);
             scanfRes = 0;
             n = 0;
         }
