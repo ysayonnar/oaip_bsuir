@@ -20,8 +20,7 @@ typedef union{
 
 typedef struct{
 	StudentInfo info;
-	ExamData exams;
-	int isMarks;
+	ExamData exams[2]; // [0] - экзамены, [1] - оценки
 	int amount;
 } Student;
 
@@ -31,7 +30,7 @@ void initStudent(Student *student, Exams exams);
 
 Exams initExams();
 
-void printStudentsBySemestr(Student *students, int semestr, int l);
+void printStudentsBySemestr(Student *students, Exams exams, int semestr, int l);
 
 void freeStudents(Student **students, int l);
 

@@ -11,7 +11,7 @@ int main(){
 
 	while(ans != 0){
 		ans = inputNumber("Enter which semestr you would like to see(-1 - to all, 0 - to quit): ", -1,8);
-		printStudentsBySemestr(students, ans, amount);
+		printStudentsBySemestr(students, exams, ans, amount);
 	}
 
 	freeStudents(&students, amount);

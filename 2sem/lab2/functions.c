@@ -26,8 +26,6 @@ void initStudent(Student *student, Exams exams){
 
 	student->info.semestr = inputNumber("Enter number of semestr(1-8): ", 1, 8);
 
-	student->isMarks = inputNumber("Do you want to enter marks of numbers of exams(0 - exams, 1 - marks): ", 0, 1);
-
 	printf("Exams:\n");
 	for(int i = 0; i < exams.amount; i++){
 		printf("%d - %s\n", i, *(exams.exams + i));
@@ -35,28 +33,24 @@ void initStudent(Student *student, Exams exams){
 	
 	int amountOfExams = inputNumber("Enter how many exams/marks to add: ", 1, exams.amount);
 
-	if(student->isMarks == 0){
-		student->exams.examNumbers = (int*)malloc(sizeof(int) * amountOfExams);
-	}else {
-		student->exams.marks = (float*)malloc(sizeof(float) * amountOfExams);
-	}
+	student->exams[0].examNumbers = (int*)malloc(sizeof(int) * amountOfExams);
+	student->exams[1].marks = (float *)malloc(sizeof(float) * amountOfExams);
 	
-	for(int i = 0; i < amountOfExams; i++){
-		if(student->isMarks == 0){
-			int idx = inputNumber("Enter index of exam: ", 0, exams.amount - 1);
-			*(student->exams.examNumbers + i) = idx;
-			for(int j = 0; j < i; j++){
-				if(*(student->exams.examNumbers + j) == idx){
-					printf("\033[1;31m\tExam already added!\033[0m\n");
-					i--;
-					break;
-				}
+	for(int i = 0; i < amountOfExams; i++){  
+		int examIdx = inputNumber("Enter index of exam: ", 0, exams.amount - 1);
+		float mark = inputFloat("Enter mark of exam: ", 0, 10);
+
+		*(student->exams[0].examNumbers + i) = examIdx;
+		*(student->exams[1].marks + i) = mark;
+		for(int j = 0; j < i; j++){
+			if(*(student->exams[0].examNumbers + j) == examIdx){
+				printf("\033[1;31m\tExam already added!\033[0m\n");
+				i--;
+				break;
 			}
-		}else{
-			float mark = inputFloat("Enter mark of exam: ", 0, 10);
-			*(student->exams.marks + i) = mark;
 		}
 	}
+	
 	student->amount = amountOfExams;
 }
 
@@ -78,7 +72,7 @@ Exams initExams(){
 }
 
 
-void printStudentsBySemestr(Student *students, int semestr, int l){
+void printStudentsBySemestr(Student *students, Exams exams, int semestr, int l){
 	int ctr = 0;
     for(int i = 0; i < l; i++){
         Student s = *(students + i);
@@ -102,11 +96,7 @@ void printStudentsBySemestr(Student *students, int semestr, int l){
             printf("%-20s %-20s %-20s %-10d ", s.info.firstName, s.info.lastName, s.info.patronymic, s.info.semestr);
 
             for(int j = 0; j < s.amount; j++){
-                if(s.isMarks == 0){
-                    printf("%-10d ", *(s.exams.examNumbers + j)); 
-                } else {
-                    printf("%.1f %-10s", *(s.exams.marks + j), "");
-                }
+				printf("%s: %.1f, ", exams.exams[*(s.exams[0].examNumbers + j)], *(s.exams[1].marks + j));
             }
             printf("\n");
         }
@@ -117,11 +107,8 @@ void printStudentsBySemestr(Student *students, int semestr, int l){
 void freeStudents(Student **students, int l){
 	for (int i = 0; i < l; i++) {
 		Student *s = *(students + i);
-		free(s->info.firstName);
-		free(s->info.lastName);
-		free(s->info.patronymic);
-		free(s->exams.examNumbers);
-		free(s->exams.marks);
+		free(s->exams[0].examNumbers);
+		free(s->exams[1].marks);
 		free(s);
 	}
 	free(students);
