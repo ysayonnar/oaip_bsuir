@@ -1,13 +1,13 @@
 #include "functions.h"
 #include "../../utils/utils.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_LENGTH 50
 
 void initStudents(Student** students, Exams exams, int amount){
 	*students = (Student*)malloc(sizeof(Student) * amount);
-
+	
 	for(int i = 0; i < amount; i++){
 		printf("\nCreating of student number %d: \n", i + 1);
 		initStudent(*students + i, exams);
