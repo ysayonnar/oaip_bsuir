@@ -20,7 +20,7 @@ void initStudent(Student *student, Exams exams){
 
 	printf("Enter lastname of student: ");
 	scanf("%49s", student->info.lastName);
-
+	
 	printf("Enter patronymic of student: ");
 	scanf("%49s", student->info.patronymic);
 
