@@ -1,12 +1,13 @@
 #include "../../utils/utils.h"
 #include "functions.h"
 #include <stdio.h>
+#define MAX_LENGTH 100
 
 int main() {
   int ans = 1;
 
   while (ans == 1) {
-    char expression[100];
+    char expression[MAX_LENGTH];
 
     printf("Enter expression: ");
 
