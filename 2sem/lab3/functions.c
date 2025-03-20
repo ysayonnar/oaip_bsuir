@@ -52,17 +52,17 @@ int checkBrackets(const char *expression) {
       push(&stack, symbol);
     } else if (isClosingBracket(symbol)) {
       if (stack == NULL) {
-        return 0;
+        return i;
       }
 
       char prev;
       int isPopped = pop(&stack, &prev);
       if (!isPopped) {
-        return 0;
+        return i;
       }
 
       if (!isMatchingPair(prev, symbol)) {
-        return 0;
+        return i;
       }
     }
   }

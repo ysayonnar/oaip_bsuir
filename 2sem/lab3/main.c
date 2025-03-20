@@ -14,10 +14,17 @@ int main() {
     fgets(expression, sizeof(expression), stdin);
 
     int isCorrect = checkBrackets(expression);
-    if (isCorrect) {
+    if (isCorrect == 1) {
       printf("correct!\n");
     } else {
-      printf("not correct!\n");
+      printf("error: ");
+      for (int i = 0; *(expression + i) != '\0'; i++) {
+        if (i == isCorrect) {
+          printf("\033[1;31m%c\033[0m", *(expression + i));
+        } else {
+          printf("%c", *(expression + i));
+        }
+      }
     }
 
     clearBuffer();
