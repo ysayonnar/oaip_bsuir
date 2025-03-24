@@ -9,6 +9,7 @@ typedef struct Stack {
 // returns 0 or 1, where 1 means that op was successfull
 int push(Stack **stack, char symbol);
 int pop(Stack **stack, char *destination);
+void freeStack(Stack *Stack);
 
 // brackets ops
 int isBracket(char symbol);

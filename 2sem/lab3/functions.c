@@ -27,6 +27,14 @@ int pop(Stack **stack, char *destination) {
   return 1;
 }
 
+void freeStack(Stack *stack) {
+  while (stack != NULL) {
+    Stack *temp = stack;
+    stack = stack->next;
+    free(temp);
+  }
+}
+
 int isBracket(char symbol) {
   return symbol == '(' || symbol == ')' || symbol == '[' || symbol == ']' ||
          symbol == '{' || symbol == '}';
@@ -52,16 +60,19 @@ int checkBrackets(const char *expression) {
       push(&stack, symbol);
     } else if (isClosingBracket(symbol)) {
       if (stack == NULL) {
+        freeStack(stack);
         return i;
       }
 
       char prev;
       int isPopped = pop(&stack, &prev);
       if (!isPopped) {
+        freeStack(stack);
         return i;
       }
 
       if (!isMatchingPair(prev, symbol)) {
+        freeStack(stack);
         return i;
       }
     }
