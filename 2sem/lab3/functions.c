@@ -78,5 +78,7 @@ int checkBrackets(const char *expression) {
     }
   }
 
-  return stack == NULL;
+  int isEmpty = stack == NULL;
+  freeStack(stack);
+  return isEmpty;
 }
