@@ -38,8 +38,12 @@ void initStudent(StudentNode *studentNode, Exams exams);
 
 Exams initExams();
 
-void printStudentsBySemestr(StudentsList *studentsList, Exams exams,
-                            int semestr);
+StudentsList *findStudentsBySemestr(StudentsList *studentsList, int semestr);
+
+StudentsList *findStudentsByName(StudentsList *studentsList,
+                                 char targetFio[50]);
+
+void printStudents(StudentsList *studentsList, Exams exams);
 
 void freeStudents(StudentsList *studentsList);
 
