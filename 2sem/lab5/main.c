@@ -36,6 +36,7 @@ int main() {
       break;
     case 7:
       freeTree(tree);
+      tree = NULL;
       break;
     }
   }
