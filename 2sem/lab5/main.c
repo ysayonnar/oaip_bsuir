@@ -1,37 +1,42 @@
 #include "../../utils/utils.h"
 #include "functions.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 int main() {
-  int count = inputNumber("Enter how many nums to insert: ", 0, 100);
+  int option = 1;
+  TreeNode *tree = NULL;
 
-  TreeNode *tree;
+  while (option != 0) {
+    printf("Choose option:\n\t1 - Fill tree\n\t2 - Preorder DFS\n\t3 - "
+           "Inorder DFS\n\t");
+    printf(
+        "4 - Postorder DFS\n\t5 - Print tree\n\t6 - Delete node by value\n\t");
+    printf("7 - Delete tree and create new one\n\t0 - Quit\n");
+    option = inputNumber("Option: ", 0, 7);
 
-  for (int i = 0; i < count; i++) {
-    int num = inputNumber("Enter number: ", -1000, 1000);
-
-    if (i == 0) {
-      tree = newTreeNode(num);
-    } else {
-      insertTree(tree, num);
+    switch (option) {
+    case 1:
+      fillTree(&tree);
+      break;
+    case 2:
+      printDfsByType(tree, option - 3);
+      break;
+    case 3:
+      printDfsByType(tree, option - 3);
+      break;
+    case 4:
+      printDfsByType(tree, option - 3);
+      break;
+    case 5:
+      printTree(tree);
+      break;
+    case 6:
+      deleteNodeByValue(tree);
+      break;
+    case 7:
+      freeTree(tree);
+      break;
     }
   }
-
-  printTree(tree);
-
-  Slice *dfsSlice = newSlice();
-  dfsPreorder(tree, dfsSlice);
-  printf("DFS_PREORDER:");
-  printSlice(dfsSlice);
-  freeSlice(dfsSlice);
-
-  dfsInorder(tree, dfsSlice);
-  printf("DFS_INORDER:");
-  printSlice(dfsSlice);
-  freeSlice(dfsSlice);
-
-  dfsPostorder(tree, dfsSlice);
-  printf("DFS_POSTORDER:");
-  printSlice(dfsSlice);
-  freeSlice(dfsSlice);
 }

@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "../../utils/utils.h"
 #include "stddef.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -56,13 +57,13 @@ TreeNode *newTreeNode(int value) {
   return node;
 }
 
-void insertTree(TreeNode *tree, int value) {
-  if (tree == NULL) {
-    tree = newTreeNode(value);
+void insertTree(TreeNode **tree, int value) {
+  if (*tree == NULL) {
+    *tree = newTreeNode(value);
     return;
   }
 
-  TreeNode *currentNode = tree;
+  TreeNode *currentNode = *tree;
   while (currentNode != NULL) {
     if (value == currentNode->value) {
       return;
@@ -100,7 +101,16 @@ void printTreeHelper(TreeNode *tree, int space) {
   printTreeHelper(tree->left, space);
 }
 
-void printTree(TreeNode *tree) { printTreeHelper(tree, 0); }
+void printTree(TreeNode *tree) {
+  if (tree == NULL) {
+    printf("Tree is empty!\n");
+    return;
+  }
+
+  printf("Tree:\n");
+  printTreeHelper(tree, 0);
+  printf("\n");
+}
 
 void dfsPreorder(TreeNode *tree, Slice *slice) {
   if (tree == NULL) {
@@ -131,4 +141,105 @@ void dfsPostorder(TreeNode *tree, Slice *slice) {
   dfsPostorder(tree->left, slice);
   dfsPostorder(tree->right, slice);
   append(slice, tree->value);
+}
+
+void dfsByType(TreeNode *tree, Slice *slice, int type) {
+  switch (type) {
+  case -1:
+    dfsPreorder(tree, slice);
+    break;
+  case 0:
+    dfsInorder(tree, slice);
+    break;
+  case 1:
+    dfsPostorder(tree, slice);
+    break;
+  }
+}
+
+int deleteNode(TreeNode *tree, int value) {
+  if (tree == NULL) {
+    return 0;
+  } else if (tree->value == value) {
+    // root cant be deleted
+    return 0;
+  }
+
+  TreeNode *prev = NULL;
+  TreeNode *currentNode = tree;
+
+  while (currentNode != NULL) {
+    if (value == currentNode->value) {
+      Slice *slice = newSlice();
+      dfsPostorder(currentNode->left, slice);
+      dfsPostorder(currentNode->right, slice);
+
+      if (currentNode->value < prev->value) {
+        prev->left = NULL;
+      } else if (currentNode->value > prev->value) {
+        prev->right = NULL;
+      }
+
+      freeTree(currentNode);
+
+      for (int i = 0; i < slice->len; i++) {
+        insertTree(&prev, *(slice->values + i));
+      }
+
+      return 1;
+    } else if (value < currentNode->value) {
+      prev = currentNode;
+      currentNode = currentNode->left;
+    } else if (value > currentNode->value) {
+      prev = currentNode;
+      currentNode = currentNode->right;
+    }
+  }
+
+  return 0;
+}
+
+void freeTree(TreeNode *tree) {
+  if (tree == NULL) {
+    return;
+  }
+
+  freeTree(tree->left);
+  freeTree(tree->right);
+
+  free(tree);
+  tree = NULL;
+}
+
+void fillTree(TreeNode **tree) {
+  int count = inputNumber("How many numbers to insert: ", 1, 100);
+
+  for (int i = 0; i < count; i++) {
+    int num = inputNumber("Enter number: ", -1000, 1000);
+    insertTree(tree, num);
+  }
+}
+
+void printDfsByType(TreeNode *tree, int type) {
+  Slice *slice = newSlice();
+
+  dfsByType(tree, slice, type);
+  if (slice->len == 0) {
+    printf("Tree is empty!\n");
+    return;
+  }
+  printf("DFS: ");
+  printSlice(slice);
+  freeSlice(slice);
+  printf("\n");
+}
+
+void deleteNodeByValue(TreeNode *tree) {
+  int value = inputNumber("Enter node to delete: ", -1000, 1000);
+  int isDeleted = deleteNode(tree, value);
+  if (isDeleted) {
+    printf("Deleted!\n");
+  } else {
+    printf("Node was not deleted...\n");
+  }
 }

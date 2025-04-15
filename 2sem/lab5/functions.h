@@ -13,6 +13,8 @@ typedef struct {
   int capacity;
 } Slice;
 
+// slice functions
+
 Slice *newSlice();
 
 void append(Slice *slice, int value);
@@ -21,16 +23,24 @@ void printSlice(Slice *slice);
 
 void freeSlice(Slice *slice);
 
-TreeNode *newTreeNode(int value);
+// tree functions
 
-void insertTree(TreeNode *tree, int value);
+void insertTree(TreeNode **tree, int value);
 
 void printTree(TreeNode *tree);
 
-void dfsPreorder(TreeNode *tree, Slice *slice);
+void dfsByType(TreeNode *tree, Slice *slice, int type);
 
-void dfsInorder(TreeNode *tree, Slice *slice);
+int deleteNode(TreeNode *tree, int value);
 
-void dfsPostorder(TreeNode *tree, Slice *slice);
+void freeTree(TreeNode *tree);
+
+// client functions
+
+void fillTree(TreeNode **tree);
+
+void printDfsByType(TreeNode *tree, int type);
+
+void deleteNodeByValue(TreeNode *tree);
 
 #endif
