@@ -183,7 +183,7 @@ int deleteNode(TreeNode *tree, int value) {
       freeTree(currentNode);
 
       for (int i = 0; i < slice->len; i++) {
-        insertTree(&prev, *(slice->values + i));
+        insertTree(&tree, *(slice->values + i));
       }
 
       return 1;
