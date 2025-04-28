@@ -112,47 +112,87 @@ void printTree(TreeNode *tree) {
   printf("\n");
 }
 
-void dfsPreorder(TreeNode *tree, Slice *slice) {
+void dfsPreorderLeft(TreeNode *tree, Slice *slice) {
   if (tree == NULL) {
     return;
   }
 
   append(slice, tree->value);
 
-  dfsPreorder(tree->left, slice);
-  dfsPreorder(tree->right, slice);
+  dfsPreorderLeft(tree->left, slice);
+  dfsPreorderLeft(tree->right, slice);
 }
 
-void dfsInorder(TreeNode *tree, Slice *slice) {
+void dfsInorderLeft(TreeNode *tree, Slice *slice) {
   if (tree == NULL) {
     return;
   }
 
-  dfsInorder(tree->left, slice);
+  dfsInorderLeft(tree->left, slice);
   append(slice, tree->value);
-  dfsInorder(tree->right, slice);
+  dfsInorderLeft(tree->right, slice);
 }
 
-void dfsPostorder(TreeNode *tree, Slice *slice) {
+void dfsPostorderLeft(TreeNode *tree, Slice *slice) {
   if (tree == NULL) {
     return;
   }
 
-  dfsPostorder(tree->left, slice);
-  dfsPostorder(tree->right, slice);
+  dfsPostorderLeft(tree->left, slice);
+  dfsPostorderLeft(tree->right, slice);
+  append(slice, tree->value);
+}
+
+void dfsPreorderRight(TreeNode *tree, Slice *slice) {
+  if (tree == NULL) {
+    return;
+  }
+
+  append(slice, tree->value);
+
+  dfsPreorderRight(tree->left, slice);
+  dfsPreorderRight(tree->right, slice);
+}
+
+void dfsInorderRight(TreeNode *tree, Slice *slice) {
+  if (tree == NULL) {
+    return;
+  }
+
+  dfsInorderRight(tree->left, slice);
+  append(slice, tree->value);
+  dfsInorderRight(tree->right, slice);
+}
+
+void dfsPostorderRight(TreeNode *tree, Slice *slice) {
+  if (tree == NULL) {
+    return;
+  }
+
+  dfsPostorderRight(tree->left, slice);
+  dfsPostorderRight(tree->right, slice);
   append(slice, tree->value);
 }
 
 void dfsByType(TreeNode *tree, Slice *slice, int type) {
   switch (type) {
-  case -1:
-    dfsPreorder(tree, slice);
-    break;
   case 0:
-    dfsInorder(tree, slice);
+    dfsPreorderLeft(tree, slice);
     break;
   case 1:
-    dfsPostorder(tree, slice);
+    dfsInorderLeft(tree, slice);
+    break;
+  case 2:
+    dfsPostorderLeft(tree, slice);
+    break;
+  case 3:
+    dfsPreorderRight(tree, slice);
+    break;
+  case 4:
+    dfsInorderRight(tree, slice);
+    break;
+  case 5:
+    dfsPostorderRight(tree, slice);
     break;
   }
 }
@@ -171,8 +211,8 @@ int deleteNode(TreeNode *tree, int value) {
   while (currentNode != NULL) {
     if (value == currentNode->value) {
       Slice *slice = newSlice();
-      dfsPostorder(currentNode->left, slice);
-      dfsPostorder(currentNode->right, slice);
+      dfsPostorderLeft(currentNode->left, slice);
+      dfsPostorderLeft(currentNode->right, slice);
 
       if (currentNode->value < prev->value) {
         prev->left = NULL;
