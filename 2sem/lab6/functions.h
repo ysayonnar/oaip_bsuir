@@ -26,11 +26,19 @@ typedef struct {
 
 void writeStudentsToFile(Student *students, int amount);
 
+int readStudentsFromFile(Student **students, Exams exams);
+
+void writeExamsToFile(Exams exams);
+
+Exams readExamsFromFile();
+
 void initStudents(Student **students, Exams exams, int amount);
 
 void initStudent(Student *student, Exams exams);
 
 Exams initExams();
+
+void addExams(Exams *exams);
 
 void printStudentsBySemestr(Student *students, Exams exams, int semestr, int l);
 

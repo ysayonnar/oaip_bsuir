@@ -2,14 +2,16 @@
 #include "../../utils/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_LENGTH 50
 #define STUDENTS_FILENAME "students.txt"
+#define EXAMS_FILENAME "exams.txt"
 
 void writeStudentsToFile(Student *students, int amount) {
-  FILE *file = fopen(STUDENTS_FILENAME, "a");
+  FILE *file = fopen(STUDENTS_FILENAME, "w");
   if (file == NULL) {
-    printf("unexpected error while opening file %s, mode: a",
+    printf("unexpected error while opening file %s, mode: w\n",
            STUDENTS_FILENAME);
     return;
   }
@@ -27,9 +29,109 @@ void writeStudentsToFile(Student *students, int amount) {
 
     fprintf(file, "\n");
   }
-  fclose(file);
 
+  fclose(file);
   return;
+}
+
+int readStudentsFromFile(Student **all, Exams exams) {
+  FILE *file = fopen(STUDENTS_FILENAME, "r");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: r\n",
+           STUDENTS_FILENAME);
+    return 0;
+  }
+
+  Student *students = NULL;
+  *all = students;
+
+  int counter = 0;
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    line[strcspn(line, "\n")] = '\0';
+    if (line[0] == '\n') {
+      return counter;
+    }
+
+    counter++;
+    students = (Student *)realloc(students, sizeof(Student) * counter);
+    Student *current = students + counter - 1;
+
+    int marksAmount;
+    sscanf(line, "%s %s %s %d %d", current->info.firstName,
+           current->info.lastName, current->info.patronymic,
+           &(current->info.semestr), &marksAmount);
+    current->amount = marksAmount;
+
+    char *markPairsPointer = line;
+    for (int i = 0; i < 5; i++) {
+      markPairsPointer += strcspn(markPairsPointer, " \t");
+      markPairsPointer += strspn(markPairsPointer, " \t");
+    }
+
+    current->exams[0].examNumbers = (int *)malloc(sizeof(int) * marksAmount);
+    current->exams[1].marks = (float *)malloc(sizeof(float) * marksAmount);
+
+    for (int i = 0; i < marksAmount; i++) {
+      int examIdx;
+      float mark;
+      sscanf(markPairsPointer, "%d %f", &examIdx, &mark);
+
+      *(current->exams[0].examNumbers + i) = examIdx;
+      *(current->exams[1].marks + i) = mark;
+
+      markPairsPointer += strcspn(markPairsPointer, " \t");
+      markPairsPointer += strspn(markPairsPointer, " \t");
+    }
+  }
+
+  fclose(file);
+  return counter;
+}
+
+void writeExamsToFile(Exams exams) {
+  FILE *file = fopen(EXAMS_FILENAME, "w");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: w\n",
+           STUDENTS_FILENAME);
+    return;
+  }
+
+  for (int i = 0; i < exams.amount; i++) {
+    fprintf(file, "%d %s\n", i, *(exams.exams + i));
+  }
+
+  fclose(file);
+  return;
+}
+
+Exams readExamsFromFile() {
+  Exams exams;
+  exams.amount = 0;
+
+  FILE *file = fopen(EXAMS_FILENAME, "r");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: r\n", EXAMS_FILENAME);
+    return exams;
+  }
+
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    line[strcspn(line, "\n")] = '\0';
+    if (line[0] == '\n') {
+      return exams;
+    }
+
+    exams.amount++;
+    exams.exams = (char **)realloc(exams.exams, sizeof(char *) * exams.amount);
+    *(exams.exams + exams.amount - 1) = (char *)malloc(sizeof(char));
+
+    int idx;
+    sscanf(line, "%d %s", &idx, *(exams.exams + exams.amount - 1));
+  }
+
+  fclose(file);
+  return exams;
 }
 
 void initStudents(Student **students, Exams exams, int amount) {
@@ -97,6 +199,28 @@ Exams initExams() {
 
   Exams e = {exams, count};
   return e;
+}
+
+void addExams(Exams *exams) {
+  int count = inputNumber("Enter how many exams to add: ", 1, 20);
+
+  exams->amount += count;
+  exams->exams = (char **)realloc(exams->exams, exams->amount * sizeof(char *));
+
+  for (int i = exams->amount - count; i < exams->amount; i++) {
+    *(exams->exams + i) = (char *)malloc(sizeof(char));
+    printf("Enter exam number %d: ", i);
+    scanf("%49s", *(exams->exams + i));
+
+    for (int j = 0; j < exams->amount - count; j++) {
+      if (strcmp(*(exams->exams + i), *(exams->exams + j)) == 0) {
+        printf("already exists!\n");
+        free(*(exams->exams + i));
+        i--;
+        break;
+      }
+    }
+  }
 }
 
 void printStudentsBySemestr(Student *students, Exams exams, int semestr,
