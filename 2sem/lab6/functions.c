@@ -4,6 +4,33 @@
 #include <stdlib.h>
 
 #define MAX_LENGTH 50
+#define STUDENTS_FILENAME "students.txt"
+
+void writeStudentsToFile(Student *students, int amount) {
+  FILE *file = fopen(STUDENTS_FILENAME, "a");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: a",
+           STUDENTS_FILENAME);
+    return;
+  }
+
+  for (int i = 0; i < amount; i++) {
+    Student current = *(students + i);
+    fprintf(file, "%s %s %s %d %d ", current.info.firstName,
+            current.info.lastName, current.info.patronymic,
+            current.info.semestr, current.amount);
+
+    for (int j = 0; j < current.amount; j++) {
+      fprintf(file, "%d %f ", *(current.exams[0].examNumbers + j),
+              *(current.exams[1].marks + j));
+    }
+
+    fprintf(file, "\n");
+  }
+  fclose(file);
+
+  return;
+}
 
 void initStudents(Student **students, Exams exams, int amount) {
   *students = (Student *)malloc(sizeof(Student) * amount);
