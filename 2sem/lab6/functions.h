@@ -36,6 +36,8 @@ void initStudents(Student **students, Exams exams, int amount);
 
 void initStudent(Student *student, Exams exams);
 
+void addStudents(Student **students, Exams exams, int *studentsAmount);
+
 Exams initExams();
 
 void addExams(Exams *exams);

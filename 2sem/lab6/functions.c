@@ -42,9 +42,6 @@ int readStudentsFromFile(Student **all, Exams exams) {
     return 0;
   }
 
-  Student *students = NULL;
-  *all = students;
-
   int counter = 0;
   char line[256];
   while (fgets(line, sizeof(line), file)) {
@@ -54,8 +51,8 @@ int readStudentsFromFile(Student **all, Exams exams) {
     }
 
     counter++;
-    students = (Student *)realloc(students, sizeof(Student) * counter);
-    Student *current = students + counter - 1;
+    *all = (Student *)realloc(*all, sizeof(Student) * counter);
+    Student *current = *all + counter - 1;
 
     int marksAmount;
     sscanf(line, "%s %s %s %d %d", current->info.firstName,
@@ -182,6 +179,18 @@ void initStudent(Student *student, Exams exams) {
   }
 
   student->amount = amountOfExams;
+}
+
+void addStudents(Student **students, Exams exams, int *studentsAmount) {
+  int amount = inputNumber("Enter how many students to add: ", 1, 20);
+  *studentsAmount += amount;
+
+  *students = (Student *)realloc(*students, sizeof(Student) * *studentsAmount);
+
+  for (int i = *studentsAmount - amount; i < *studentsAmount; i++) {
+    printf("\nCreating of student number %d: \n", i + 1);
+    initStudent(*students + i, exams);
+  }
 }
 
 Exams initExams() {

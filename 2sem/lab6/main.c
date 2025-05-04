@@ -1,6 +1,5 @@
 #include "../../utils/utils.h"
 #include "functions.h"
-#include "stdio.h"
 
 int main() {
   Exams exams = readExamsFromFile();
@@ -12,14 +11,15 @@ int main() {
 
   Student *students;
   int studentsAmount = readStudentsFromFile(&students, exams);
-
-  /* int amount = inputNumber("Enter how many students to create: ", 1, 20);
-   */
-  /* initStudents(&students, exams, amount); */
+  if (studentsAmount == 0) {
+    studentsAmount = inputNumber("Enter how many students to create: ", 1, 20);
+    initStudents(&students, exams, studentsAmount);
+  } else if (inputNumber("Do you want to add students?(1 - yes): ", 0, 1) ==
+             1) {
+    addStudents(&students, exams, &studentsAmount);
+  }
 
   int ans = -1;
-  printf("amount: %d", studentsAmount);
-
   while (ans != 0) {
     ans = inputNumber(
         "Enter which semestr you would like to see(-1 - to all, 0 - to quit): ",
