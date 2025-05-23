@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 void writeStudentsToFile(Student *students, int amount) {
   FILE *file = fopen(STUDENTS_FILENAME, "wb");
   if (file == NULL) {
