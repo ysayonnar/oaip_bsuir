@@ -1,6 +1,10 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#define MAX_LENGTH 50
+#define STUDENTS_FILENAME "students"
+#define EXAMS_FILENAME "exams"
+
 typedef struct {
   char **exams;
   int amount;

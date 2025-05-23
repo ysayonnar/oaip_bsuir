@@ -3,11 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define MAX_LENGTH 50
-#define STUDENTS_FILENAME "students"
-#define EXAMS_FILENAME "exams"
-
 void writeStudentsToFile(Student *students, int amount) {
   FILE *file = fopen(STUDENTS_FILENAME, "wb");
   if (file == NULL) {
