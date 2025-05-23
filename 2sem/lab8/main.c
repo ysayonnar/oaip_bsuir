@@ -30,7 +30,8 @@ int main() {
         printf("data already read\n");
         break;
       }
-      printf("currently not available\n");
+      exams = readExamsFromTextFile();
+      studentsAmount = readStudentsFromTextFile(students, exams);
       break;
     }
     case 3: {
@@ -45,7 +46,10 @@ int main() {
       break;
     }
     case 4: {
-      printf("currently not available\n");
+      writeExamsToTextFile(exams);
+      writeStudentsToTextFile(students, studentsAmount);
+      option = 0; // for exit
+      freeStudents(students);
       break;
     }
     case 5: {

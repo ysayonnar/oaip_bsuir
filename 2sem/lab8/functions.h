@@ -45,6 +45,14 @@ void writeExamsToBinaryFile(Exams exams);
 
 Exams readExamsFromBinaryFile();
 
+void writeStudentsToTextFile(StudentsList *students, int amount);
+
+int readStudentsFromTextFile(StudentsList *all, Exams exams);
+
+void writeExamsToTextFile(Exams exams);
+
+Exams readExamsFromTextFile();
+
 void initStudents(StudentsList *studentsList, Exams exams,
                   int amount); // amount - количество создаваемых
 

@@ -145,6 +145,145 @@ Exams readExamsFromBinaryFile() {
   return exams;
 }
 
+void writeStudentsToTextFile(StudentsList *students, int amount) {
+  FILE *file = fopen(STUDENTS_FILENAME_TEXT, "w");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: w\n",
+           STUDENTS_FILENAME_TEXT);
+    return;
+  }
+
+  StudentNode *current = students->head;
+  while (current != NULL) {
+    fprintf(file, "%s %s %s %d %d ", current->info.firstName,
+            current->info.lastName, current->info.patronymic,
+            current->info.semestr, current->amount);
+
+    for (int j = 0; j < current->amount; j++) {
+      fprintf(file, "%d %f ", *(current->exams[0].examNumbers + j),
+              *(current->exams[1].marks + j));
+    }
+    fprintf(file, "\n");
+
+    current = current->nextStudent;
+  }
+
+  fclose(file);
+  return;
+}
+
+int readStudentsFromTextFile(StudentsList *students, Exams exams) {
+  FILE *file = fopen(STUDENTS_FILENAME_TEXT, "r");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: r\n",
+           STUDENTS_FILENAME_TEXT);
+    return 0;
+  }
+
+  StudentNode *current;
+
+  int counter = 0;
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    line[strcspn(line, "\n")] = '\0';
+    if (line[0] == '\n') {
+      return counter;
+    }
+
+    if (counter == 0) {
+      students->head = (StudentNode *)malloc(sizeof(StudentNode));
+      current = students->head;
+    } else {
+      current->nextStudent = (StudentNode *)malloc(sizeof(StudentNode));
+      current = current->nextStudent;
+    }
+
+    counter++;
+    int marksAmount;
+    sscanf(line, "%s %s %s %d %d", current->info.firstName,
+           current->info.lastName, current->info.patronymic,
+           &(current->info.semestr), &marksAmount);
+    current->amount = marksAmount;
+
+    char *markPairsPointer = line;
+    for (int i = 0; i < 5; i++) {
+      markPairsPointer += strcspn(markPairsPointer, " \t");
+      markPairsPointer += strspn(markPairsPointer, " \t");
+    }
+
+    current->exams[0].examNumbers = (int *)malloc(sizeof(int) * marksAmount);
+    current->exams[1].marks = (float *)malloc(sizeof(float) * marksAmount);
+
+    for (int i = 0; i < marksAmount; i++) {
+      int examIdx;
+      float mark;
+      sscanf(markPairsPointer, "%d %f", &examIdx, &mark);
+
+      *(current->exams[0].examNumbers + i) = examIdx;
+      *(current->exams[1].marks + i) = mark;
+
+      markPairsPointer += strcspn(markPairsPointer, " \t");
+      markPairsPointer += strspn(markPairsPointer, " \t");
+    }
+  }
+
+  fclose(file);
+  return counter;
+}
+
+void writeExamsToTextFile(Exams exams) {
+  FILE *file = fopen(EXAMS_FILENAME_TEXT, "w");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: w\n",
+           STUDENTS_FILENAME_TEXT);
+    return;
+  }
+
+  for (int i = 0; i < exams.amount; i++) {
+    fprintf(file, "%d %s\n", i, *(exams.exams + i));
+  }
+
+  fclose(file);
+  return;
+}
+
+Exams readExamsFromTextFile() {
+  Exams exams;
+  exams.amount = 0;
+  exams.exams = NULL;
+
+  FILE *file = fopen(EXAMS_FILENAME_TEXT, "r");
+  if (file == NULL) {
+    printf("unexpected error while opening file %s, mode: r\n",
+           EXAMS_FILENAME_TEXT);
+    return exams;
+  }
+
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    line[strcspn(line, "\n")] = '\0';
+    if (line[0] == '\n') {
+      break;
+    }
+
+    int idx;
+    char name[128];
+
+    if (sscanf(line, "%d %127s", &idx, name) != 2) {
+      printf("Invalid line format: %s\n", line);
+      continue;
+    }
+
+    exams.amount++;
+    exams.exams = (char **)realloc(exams.exams, sizeof(char *) * exams.amount);
+    exams.exams[exams.amount - 1] = (char *)malloc(strlen(name) + 1);
+    strcpy(exams.exams[exams.amount - 1], name);
+  }
+
+  fclose(file);
+  return exams;
+}
+
 StudentsList *NewStudentsList() {
   StudentsList *studentsList = (StudentsList *)malloc(sizeof(StudentsList));
   studentsList->head = NULL;
