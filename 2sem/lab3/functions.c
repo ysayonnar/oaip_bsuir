@@ -1,5 +1,4 @@
 #include "functions.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 int push(Stack **stack, char symbol) {

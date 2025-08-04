@@ -5,4 +5,5 @@ vscode/
 ./.idea
 ./cmake-build-debug
 
+./2sem/huffman
 
